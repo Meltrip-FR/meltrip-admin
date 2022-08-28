@@ -1,4 +1,5 @@
 // React / Next
+import { useEffect } from "react";
 import type { AppProps } from "next/app";
 
 // Redux
@@ -8,7 +9,6 @@ import { PersistGate } from "redux-persist/integration/react";
 
 // CSS
 import "../styles/globals.css";
-import { useEffect, useState } from "react";
 
 // Constants
 import { useRouter } from "next/router";
