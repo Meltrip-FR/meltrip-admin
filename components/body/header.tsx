@@ -97,7 +97,7 @@ export const Header = () => {
                           <div className="origin-top-right absolute right-0 mt-3 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                             <div className="py-1 cursor-pointer">
                               <div
-                                onClick={() => router.push("/user/dashboard")}
+                                onClick={() => router.push("/admin/dashboard")}
                                 className="border-b border-white flex items-center justify-start px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                               >
                                 <span className="ml-2">

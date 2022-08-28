@@ -34,11 +34,18 @@ const SigninPage = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, formState)
       .then(({ data }) => {
-        console.log(data);
-        const { payload } = dispatch(login({ login: true, ...data }));
-        if (payload.id) {
-          router.push("/user/dashboard");
-        }
+        data.roles.filter((i: any) => {
+          if (i === "ROLE_ADMIN" || i === "ROLE_MODERATOR") {
+            const { payload } = dispatch(login({ login: true, ...data }));
+            if (payload.id) {
+              router.push("/admin/dashboard");
+            }
+          } else {
+            setRequestMessage(
+              "Vous n'avez pas les droits adéquats pour accéder au site."
+            );
+          }
+        });
       })
       .catch((error) => setRequestMessage(error.response.data.message));
   }

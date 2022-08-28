@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (router.pathname === "/") {
-      router.push("/home");
+      router.push("/");
     }
   }, []);
 
