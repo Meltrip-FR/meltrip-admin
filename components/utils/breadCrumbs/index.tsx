@@ -1,5 +1,5 @@
 const BreadCrumbs = ({ url, name, active }: any) => {
-  return name === "home" ? (
+  return name === "/" ? (
     <a href={"/"} className="text-gray-600 dark:text-gray-200">
       <svg
         xmlns="http://www.w3.org/2000/svg"

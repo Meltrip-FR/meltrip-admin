@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 
 // Redux
-import { logout } from "@redux/slices/auth.slice";
-import { useAppDispatch } from "@redux/hooks";
+import { authSlice, logout } from "@redux/slices/auth.slice";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 
 import { CardInfosList } from "./infosList";
 
 const Dashboard = () => {
   const router = useRouter();
+  const { auth } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   const signOut = () => {
@@ -20,10 +21,10 @@ const Dashboard = () => {
       <div className="container px-5 py-14 mx-auto">
         <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-            Compte nom entreprise
+            Bonjour {auth.user.firstname} {auth.user.lastname}
           </h1>
-          <p className="lg:w-1/2 w-full leading-relaxed text-gray-500">
-            Profile entreprise créé par XXXX XXXX
+          <p className="lg:w-1/2 w-full leading-relaxed text-blue-500">
+            {auth.user.roles[2]}
           </p>
         </div>
         <div className="flex flex-wrap -m-4">

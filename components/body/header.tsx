@@ -28,7 +28,8 @@ export const Header = () => {
         <div className="pl-5" onClick={() => router.push("/")}>
           <LogoColor size={100} color={"white"} />
         </div>
-        <div className="grid grid-flow-col auto-cols-max gap-20 text-base justify-center items-center text-left uppercase">
+        <div />
+        {/* <div className="grid grid-flow-col auto-cols-max gap-20 text-base justify-center items-center text-left uppercase">
           <h5 className="cursor-pointer" onClick={() => router.push("/")}>
             NOTRE AGENCE
           </h5>
@@ -44,7 +45,7 @@ export const Header = () => {
           >
             CONTACT
           </h5>
-        </div>
+        </div> */}
         <div className="flex items-center justify-center text-base uppercase">
           <div className="flex flex-row align-center items-center justify-between w-full">
             <div className="block lg:hidden ml-6" />

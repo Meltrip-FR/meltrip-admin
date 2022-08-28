@@ -1,5 +1,5 @@
 //React / Next
-import { Header } from "@components/body/headerWhite";
+import { Header } from "@components/body/header";
 import { useAppSelector } from "@redux/hooks";
 import Head from "next/head";
 import { useRouter } from "next/router";
