@@ -8,7 +8,7 @@ const Profil = () => {
       <div className="container px-5 py-14 mx-auto">
         <div className="flex justify-between mb-4">
           <div className="flex items-center mb-3 mt-3">
-            <BreadCrumbs url="/home" name="home" active={false} />
+            <BreadCrumbs url="/" name="home" active={false} />
             <BreadCrumbs url="/admin/dashboard" name="Compte" active={true} />
             <BreadCrumbs url="/admin/profil" name="Profil" active={false} />
           </div>

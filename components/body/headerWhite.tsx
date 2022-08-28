@@ -19,13 +19,13 @@ export const Header = () => {
 
   const signOut = () => {
     dispatch(logout());
-    router.push("/home");
+    router.push("/");
   };
 
   return (
     <div className="w-full font-body font-poppins">
       <div className="grid grid-cols-3">
-        <div className="pl-5" onClick={() => router.push("/home")}>
+        <div className="pl-5" onClick={() => router.push("/")}>
           <LogoColor size={100} color={"white"} />
         </div>
         <div className="grid grid-flow-col auto-cols-max gap-20 text-base justify-center items-center text-left uppercase">

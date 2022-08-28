@@ -1,9 +1,19 @@
 //React / Next
 import { Header } from "@components/body/headerWhite";
+import { useAppSelector } from "@redux/hooks";
 import Head from "next/head";
-import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useEffect } from "react";
+import SigninPage from "../components/auth/signin";
 
 export default function Layout({ children }: { children: React.ReactElement }) {
+  const router = useRouter();
+  const { auth } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    router.pathname === "/" && router.push("/admin/dashboard");
+  }, [auth.user.roles]);
+
   let content = (
     <div className="h-screen flex flex-row flex-auto">
       <div className="flex flex-col w-full">
@@ -13,7 +23,7 @@ export default function Layout({ children }: { children: React.ReactElement }) {
     </div>
   );
 
-  return (
+  return auth.login ? (
     <Fragment>
       <Head>
         <meta name="author" content="Meltrip" />
@@ -33,5 +43,7 @@ export default function Layout({ children }: { children: React.ReactElement }) {
       </noscript>
       {content}
     </Fragment>
+  ) : (
+    <SigninPage />
   );
 }
