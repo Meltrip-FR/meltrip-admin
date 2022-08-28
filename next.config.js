@@ -10,8 +10,8 @@ const nextConfig = {
     loader: "imgix",
     path: "https://meltrip.fr",
     domains: [
-      "https://meltrip.fr",
-      "https://www.meltrip.fr",
+      "https://admin.meltrip.fr",
+      "https://www.admin.meltrip.fr",
       "http://localhost:3000",
     ],
   },

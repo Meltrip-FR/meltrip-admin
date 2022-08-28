@@ -6,14 +6,7 @@
     "meltrip-prod": {
       "hosting": {
         "default": [
-          "meltrip-prod"
-        ]
-      }
-    },
-    "meltrip-dev": {
-      "hosting": {
-        "default": [
-          "meltrip-dev"
+          "admin-meltrip"
         ]
       }
     }
