@@ -12,7 +12,7 @@ import { FormItem } from "@components/utils/formItem";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Form = () => {
+const Form = ({ request }: any) => {
   const router = useRouter();
   const { auth } = useAppSelector((state) => state);
   const editorRef = useRef<any>(null);

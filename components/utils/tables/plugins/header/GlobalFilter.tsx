@@ -3,7 +3,6 @@ import { useAsyncDebounce } from "react-table";
 
 export const GlobalFilter = ({
   options,
-
   preGlobalFilteredRows,
   setGlobalFilter,
 }: any) => {

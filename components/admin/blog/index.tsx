@@ -40,7 +40,13 @@ const Blog = () => {
         </div>
         <div className="flex flex-col justify-center items-center w-full min-w-0 mb-6 break-words">
           <div className="px-4 py-5">
-            <div className="container tab-content tab-space">
+            <div className="flex flex-col container tab-content tab-space">
+              <button
+                className="bg-meltrip-primary flex-end p-2 mb-5 rounded text-white"
+                onClick={() => router.push("/admin/blog/article/create")}
+              >
+                Créer un article
+              </button>
               {posts.length > 0 && (
                 <Tables
                   columns={columns}

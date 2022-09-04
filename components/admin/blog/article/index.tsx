@@ -28,7 +28,7 @@ const ArticlePage = () => {
           <div className="flex items-center mb-3 mt-3">
             <BreadCrumbs url="/" name="/" active={true} />
             <BreadCrumbs url="/" name="Dashboard" active={true} />
-            <BreadCrumbs url="/blog/" name="Blog" active={true} />
+            <BreadCrumbs url="/admin/blog" name="Blog" active={true} />
             <BreadCrumbs
               url={`/blog/${router.query.id}}`}
               name={data?.title}
