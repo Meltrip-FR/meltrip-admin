@@ -205,7 +205,6 @@ const CreateArticle = () => {
                         </div>
                       </div>
                     </div>
-                    {console.log(formState?.status)}
                     <div className="col-span-6">
                       <Editor
                         apiKey={process.env.NEXT_PUBLIC_TINY}

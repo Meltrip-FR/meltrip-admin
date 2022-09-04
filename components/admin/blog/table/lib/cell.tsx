@@ -58,7 +58,7 @@ export function StatusCell({ row }: any) {
     <>
       <div className={`flex items-center cursor-pointer text-sm font-medium`}>
         <div className="flex items-center">
-          {row.original.status === 1 ? "Disabled" : "Active"}
+          {!row.original.status ? "Disabled" : "Active"}
         </div>
       </div>
     </>

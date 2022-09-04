@@ -42,12 +42,6 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
-        <button
-          className="flex mx-auto mt-16 text-white bg-meltrip-secondary border-0 py-2 px-8 focus:outline-none rounded text-lg"
-          onClick={() => signOut()}
-        >
-          Se déconnecter
-        </button>
       </div>
     </section>
   );

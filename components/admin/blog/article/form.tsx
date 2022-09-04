@@ -152,6 +152,18 @@ const Form = ({ request }: any) => {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <FormItem
+                      type="text"
+                      name="slug"
+                      label="slug"
+                      style="bg-[#ECF3F2] px-2 py-3"
+                      value={formState?.slug}
+                      onChange={onFormChange}
+                      disabled={false}
+                      required={true}
+                    />
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <FormItem
                       type="pictureURL"
                       name="pictureURL"
                       label="picture URL"
@@ -161,6 +173,34 @@ const Form = ({ request }: any) => {
                       disabled={false}
                       required={true}
                     />
+                  </div>
+                  <div className="col-span-6">
+                    <div className="flex items-center mb-4">
+                      <div className="form-check">
+                        <input
+                          className={`${
+                            formState?.status &&
+                            "form-check-input checked:bg-blue-600 checked:border-blue-600 "
+                          } appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer`}
+                          type="checkbox"
+                          value={formState?.status}
+                          onChange={(e: any) =>
+                            setFormState({
+                              ...formState,
+                              status: !formState?.status,
+                            })
+                          }
+                          id="flexCheckChecked"
+                          checked
+                        />
+                        <label
+                          className="form-check-label inline-block text-gray-800"
+                          htmlFor="flexCheckChecked"
+                        >
+                          Afficher l'article
+                        </label>
+                      </div>
+                    </div>
                   </div>
                   <div className="col-span-6">
                     <Editor
@@ -209,7 +249,7 @@ const Form = ({ request }: any) => {
                         "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                       }
                     >
-                      Ajouter un article
+                      Mettre à jour un article
                     </button>
                   </div>
                   <Transition.Root show={open} as={Fragment}>
@@ -262,11 +302,11 @@ const Form = ({ request }: any) => {
                                     as="h3"
                                     className="text-lg leading-6 font-medium text-gray-900"
                                   >
-                                    Ajouter un article
+                                    Mettre à jour un article
                                   </Dialog.Title>
                                   <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                      Êtes-vous sûr de vouloir ajouter cet
+                                      Êtes-vous sûr de vouloir mettre à jour cet
                                       article ? Toutes les informations seront
                                       directement ajoutée sur le blog.
                                     </p>
@@ -280,7 +320,7 @@ const Form = ({ request }: any) => {
                                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
                                 onClick={() => handleAddForm()}
                               >
-                                Ajouter
+                                Mettre à jour
                               </button>
                               <button
                                 type="button"
