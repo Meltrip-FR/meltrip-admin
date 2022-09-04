@@ -6,6 +6,7 @@ import {
   StatusCell,
   CreatedAtCell,
   UpdatedAtCell,
+  DeletedAtCell,
 } from "./lib/cell";
 
 export const columnPushedArticleList = [
@@ -38,5 +39,10 @@ export const columnPushedArticleList = [
     Header: "UpdatedAt",
     accessor: "updatedAt",
     Cell: UpdatedAtCell,
+  },
+  {
+    Header: "deletedAt",
+    accessor: "deletedAt",
+    Cell: DeletedAtCell,
   },
 ];
