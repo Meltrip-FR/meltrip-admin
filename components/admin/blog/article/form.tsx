@@ -1,16 +1,23 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import axios from "axios";
+import Select from "react-select";
+import { useAppSelector } from "@redux/hooks";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/outline";
 import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/router";
 import { FormItem } from "@components/utils/formItem";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Form = () => {
   const router = useRouter();
+  const { auth } = useAppSelector((state) => state);
+  const editorRef = useRef<any>(null);
 
-  const [data, setData] = useState();
-  const [dataTag, setDataTag] = useState([]);
+  const [dataTag, setDataTag] = useState<any>([]);
   const [formState, setFormState] = useState<any>();
   const [message, setMessage] = useState<any>();
   const [open, setOpen] = useState(false);
@@ -32,37 +39,58 @@ const Form = () => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/blog/article/${router.query.id}`
     );
-    setData(res.data);
-    setFormState(res.data);
+    const tagInfos: any = await getNameTag(res.data.tagId);
+    setFormState({
+      ...res.data,
+      tagName: tagInfos.data.name,
+      tagSlug: tagInfos.data.slug,
+    });
   };
-
-  const getTag = async () => {
+  const getNameTag = async (id: number) => {
+    return await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/blog/tag/${id}`);
+  };
+  const getAllTag = async () => {
     const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/blog/tag/${router.query.id}`
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/tags/`
     );
     setDataTag(res.data);
   };
 
   useEffect(() => {
     getArticle();
-    //getTag();
+    getAllTag();
   }, [router.query.id]);
 
-  const handleAddForm = () => {
-    // add_new_article(title, description, text, picture_url, categorieId).then(
-    //   () => {
-    //     setMessage(`L'article ${title} à bien était ajouté !`);
-    //     alert("Article à bien était ajouté !");
-    //     setTitle("");
-    //     setText("");
-    //     setPicture_url("");
-    //     setDescription("");
-    //     setCategorieId("");
-    //   }
-    // );
+  const handleAddForm = async () => {
+    delete formState.createdAt;
+    delete formState.updatedAt;
+    delete formState.deleteAt;
+    delete formState.tagSlug;
+    delete formState.tagName;
+    const res = await axios.put(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/article/${formState.id}`,
+      formState,
+      {
+        headers: {
+          "x-access-token": auth.user.accessToken,
+        },
+      }
+    );
+    if (res.data) {
+      setMessage(`L'article ${formState.title} à bien était mis à jour !`);
+      toast.success(`L'article ${formState.title} à bien était mis à jour !`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setOpen(false);
+    }
   };
 
-  console.log(data);
   return (
     <>
       <div className="flex w-full py-12 px-4 sm:px-6 lg:px-8">
@@ -86,6 +114,28 @@ const Form = () => {
                       onChange={onFormChange}
                       disabled={false}
                       required={true}
+                    />
+                  </div>
+                  <div className="col-span-6">
+                    <label
+                      htmlFor="location"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Selectionner une catégorie
+                    </label>
+                    <Select
+                      placeholder="Catégorie"
+                      options={dataTag.map((item: any) => ({
+                        value: item?.id,
+                        label: item?.name,
+                      }))}
+                      onChange={(e: any) =>
+                        setFormState({
+                          ...formState,
+                          tagId: e.value,
+                          tagName: e.label,
+                        })
+                      }
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -113,43 +163,40 @@ const Form = () => {
                     />
                   </div>
                   <div className="col-span-6">
-                    <label
-                      htmlFor="location"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Selectionner une catégorie
-                    </label>
-                    {/* <select
-                      id="location"
-                      name="location"
-                      autoComplete="location"
-                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      value={categorieId}
-                      onChange={(item) => setCategorieId(item.target.value)}
-                    >
-                      {getAll.map((item: any) => {
-                        return (
-                          <option key={item?.id} value={item.id}>
-                            {item?.name}
-                          </option>
-                        );
-                      })}
-                    </select> */}
-                  </div>
-                  <div className="col-span-6">
                     <Editor
+                      apiKey={process.env.NEXT_PUBLIC_TINY}
                       initialValue={formState?.text}
+                      onInit={(evt, editor) => (editorRef.current = editor)}
                       init={{
                         height: 500,
-                        menubar: true,
+                        menubar: false,
                         plugins: [
-                          "advlist autolink lists link image",
-                          "charmap print preview anchor help",
-                          "searchreplace visualblocks code",
-                          "insertdatetime media table paste wordcount",
+                          "advlist",
+                          "autolink",
+                          "lists",
+                          "link",
+                          "image",
+                          "charmap",
+                          "preview",
+                          "anchor",
+                          "searchreplace",
+                          "visualblocks",
+                          "code",
+                          "fullscreen",
+                          "insertdatetime",
+                          "media",
+                          "table",
+                          "code",
+                          "help",
+                          "wordcount",
                         ],
                         toolbar:
-                          "undo redo | formatselect | bold italic |  alignleft aligncenter alignright |  bullist numlist outdent indent | help",
+                          "undo redo | blocks | " +
+                          "bold italic forecolor | alignleft aligncenter " +
+                          "alignright alignjustify | bullist numlist outdent indent | " +
+                          "removeformat | help",
+                        content_style:
+                          "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                       }}
                       onChange={handleEditorChange}
                     />
@@ -254,6 +301,7 @@ const Form = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </>
   );
