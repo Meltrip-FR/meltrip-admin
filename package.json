@@ -19,6 +19,7 @@
     "@types/node-mailjet": "^3.3.8",
     "@types/react-table": "^7.7.12",
     "axios": "^0.27.2",
+    "daisyui": "^2.46.0",
     "firebase": "^9.6.10",
     "luxon": "^3.0.1",
     "next": "12.1.0",

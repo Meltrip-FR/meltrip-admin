@@ -12,11 +12,6 @@ export const CardInfosList = [
   //   url: "/admin/profil",
   // },
   // {
-  //   title: "Séminaires",
-  //   describe: "Vous gererez tous vos séminaire ici ainsi que vos équipes",
-  //   url: "/admin/seminar",
-  // },
-  // {
   //   title: "Paiement",
   //   describe: "Consultez les paiements , coupons et cartes cadeaux",
   //   url: "/admin/payments",
@@ -32,5 +27,11 @@ export const CardInfosList = [
     describe:
       "Création, modification, suppression d'articles sur le blog ? Vous pouvez tout gérer ici !",
     url: "/admin/blog",
+  },
+  {
+    title: "Séminaires",
+    describe:
+      "Confirmations, informations liste de séminaire en attente de réponse",
+    url: "/admin/seminar",
   },
 ];

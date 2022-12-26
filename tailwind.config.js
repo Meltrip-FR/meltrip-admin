@@ -1,9 +1,8 @@
+/** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: "media",
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -18,9 +17,19 @@ module.exports = {
         travel: "url(/travel.webp)",
       },
       fontFamily: {
-        body: ["DIN Alternate , poppins"],
+        poppins: ["Poppins", "DIN Alternate", "sans-serif"],
       },
     },
   },
-  plugins: [require("tw-elements/dist/plugin")],
+  plugins: [require("daisyui")],
+  daisyui: {
+    styled: true,
+    themes: true,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "light",
+  },
 };
