@@ -1,18 +1,15 @@
-//Redux && Persist
+// Redux && Persist
 import { createSlice } from "@reduxjs/toolkit";
-
 import storage from "redux-persist/lib/storage";
 
 export const initialState: any = {
   login: false,
   user: {
-    firstname: "",
-    lastname: "",
+    id: undefined,
+    username: "",
+    civility: "",
     email: "",
     phone: "",
-    address: "",
-    city: "",
-    zip: 0,
     terms: false,
     newsletter: false,
     roles: ["user"],
@@ -24,23 +21,20 @@ export const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state: any, action: any) => {
       const load = action.payload;
       state.login = load.login;
-      state.user.id = load.id;
-      state.user.firstname = load.firstname;
-      state.user.lastname = load.lastname;
-      state.user.email = load.email;
-      state.user.phone = load.phone;
-      state.user.address = load.address;
-      state.user.city = load.city;
-      state.user.zip = load.zip;
-      state.user.terms = load.terms;
-      state.user.newsletter = load.newsletter;
-      state.user.roles = load.roles;
-      state.user.accessToken = load.accessToken;
+      state.user.id = load.user?.id;
+      state.user.username = load.user?.username;
+      state.user.civility = load.user?.civility;
+      state.user.email = load.user.email;
+      state.user.phone = load.user.phone;
+      state.user.terms = load.user.terms;
+      state.user.newsletter = load.user.newsletter;
+      state.user.roles = load.user.roles;
+      state.user.accessToken = load.user.accessToken;
     },
-    logout: (state) => {
+    logout: (state: any) => {
       state.login = false;
       state.user.accessToken = "";
       storage.removeItem("persist:root");

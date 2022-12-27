@@ -34,10 +34,29 @@ const SigninPage = () => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, formState)
       .then(({ data }) => {
-        data.roles.filter((i: any) => {
-          if (i === "ROLE_ADMIN" || i === "ROLE_MODERATOR") {
-            const { payload } = dispatch(login({ login: true, ...data }));
-            if (payload.id) {
+        const user = data.dataValues;
+        console.log(user.email);
+        data.roles.map((i: any) => {
+          if (i === "ROLE_ADMIN") {
+            const { payload }: any = dispatch(
+              login({
+                login: true,
+                user: {
+                  id: user.id,
+                  username: user?.username,
+                  civility: user?.civility,
+                  email: user?.email,
+                  phone: user?.phone,
+                  terms: true,
+                  newsletter: user?.newsletter === 0 ? false : true,
+                  roles: user?.roles,
+                  accessToken: data?.accessToken,
+                  confirmEmail: user?.confirmEmail,
+                  idOrganization: user?.idOrganization,
+                },
+              })
+            );
+            if (payload.login) {
               router.push("/admin/dashboard");
             }
           } else {
@@ -47,7 +66,7 @@ const SigninPage = () => {
           }
         });
       })
-      .catch((error) => setRequestMessage(error.response.data.message));
+      .catch((error) => console.log(error));
   }
 
   return (

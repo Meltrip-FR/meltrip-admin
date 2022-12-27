@@ -84,9 +84,7 @@ export const Header = () => {
                         className="flex items-center  text-lg tracking-wider pr-5 uppercase"
                         onClick={() => setOpenMenu(!openMenu)}
                       >
-                        <span>
-                          {auth.user.firstname + " " + auth.user.lastname}
-                        </span>
+                        <span>{auth.user.username}</span>
                         {openMenu ? (
                           <ChevronUp size={20} />
                         ) : (
