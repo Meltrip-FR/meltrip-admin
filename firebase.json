@@ -2,12 +2,9 @@
   "hosting": {
     "public": "out",
     "target": "default",
+    "appAssociation": "AUTO",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
-      {
-        "source": "/",
-        "destination": "/index.html"
-      },
       {
         "source": "/auth/signin",
         "destination": "/auth/signin.html"
@@ -35,6 +32,10 @@
       {
         "source": "/404",
         "destination": "/404.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ]
   }
