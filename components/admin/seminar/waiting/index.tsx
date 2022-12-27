@@ -92,22 +92,24 @@ const SeminarWaiting = () => {
                 {seminarList?.length > 0 &&
                   seminarList?.map((element: any, index: any) => {
                     return (
-                      <tr
-                        key={index}
-                        className="cursor-pointer hover"
-                        onClick={() => {
-                          router.push(
-                            `/admin/seminar/waitinglist/${element?.seminar?.id}`
-                          );
-                        }}
-                      >
-                        <th>{element?.seminar?.id}</th>
-                        <td>{element?.user?.email}</td>
-                        <td>
-                          {element?.organization?.denominationUniteLegale}
-                        </td>
-                        <td> {element?.seminar?.createdAt}</td>
-                      </tr>
+                      element?.seminar?.status === ("Attente" || null) && (
+                        <tr
+                          key={index}
+                          className="cursor-pointer hover"
+                          onClick={() => {
+                            router.push(
+                              `/admin/seminar/waitinglist/${element?.seminar?.id}`
+                            );
+                          }}
+                        >
+                          <th>{element?.seminar?.id}</th>
+                          <td>{element?.user?.email}</td>
+                          <td>
+                            {element?.organization?.denominationUniteLegale}
+                          </td>
+                          <td> {element?.seminar?.createdAt}</td>
+                        </tr>
+                      )
                     );
                   })}
               </tbody>

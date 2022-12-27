@@ -59,67 +59,77 @@ const FormSeminar = () => {
     }
   };
 
-  const getSeminar = useCallback(async () => {
-    const seminar: any = getSeminarById(
-      auth.user.accessToken,
-      router?.query?.id
-    );
-    if (seminar) {
-      const user: any = getUserById(auth.user.accessToken, seminar?.idUser);
-      const organization: any = getOrganizationById(seminar?.idOrganization);
-      const group: any = getGroupById(seminar?.idGroup);
-
-      setFormState({
-        participNumber: seminar?.adultNumber,
-        knowDate: seminar?.knowDate === 0 ? false : true,
-        departurePeriod: seminar?.departurePeriod,
-        approximateDuration: seminar?.approximateDuration,
-        startDate: seminar?.startDate || null,
-        endDate: seminar?.endDate || null,
-        budgetPerPerson: seminar?.budgetPerPerson,
-        typeSeminar: seminar?.typeSeminar,
-        destinationType: seminar?.destinationType,
-        describeProject: seminar?.describeProject,
-        sleepSuggest: seminar?.sleepSuggest,
-        accompaniedSuggest: seminar?.accompaniedSuggest,
-        civility: user?.civility,
-        nameManager: user?.username,
-        emailManager: user?.email,
-        phoneManager: user?.phone,
-        emailFinancial: group?.financialEmail,
-        numberFinancial: group?.financialPhone,
-        denominationUniteLegale: organization?.denominationUniteLegale,
-        siretCompany: organization?.siret,
-      });
-    }
-  }, [auth.user.accessToken, auth.user.id]);
+  const getSeminar = useCallback(
+    async (idSeminar: string) => {
+      const seminar: any = await getSeminarById(
+        auth.user.accessToken,
+        idSeminar
+      );
+      if (seminar) {
+        const user: any = await getUserById(
+          auth.user.accessToken,
+          seminar?.idUser
+        );
+        const organization: any = await getOrganizationById(
+          seminar?.idOrganization
+        );
+        const group: any = await getGroupById(seminar?.idGroup);
+        console.log(user, organization, group);
+        setFormState({
+          participNumber: seminar?.adultNumber,
+          knowDate: seminar?.knowDate === 0 ? false : true,
+          departurePeriod: seminar?.departurePeriod,
+          approximateDuration: seminar?.approximateDuration,
+          startDate: seminar?.startDate || undefined,
+          endDate: seminar?.endDate || undefined,
+          budgetPerPerson: seminar?.budgetPerPerson,
+          typeSeminar: seminar?.typeSeminar,
+          destinationType: seminar?.destinationType,
+          describeProject: seminar?.describeProject,
+          sleepSuggest: seminar?.sleepSuggest,
+          accompaniedSuggest: seminar?.accompaniedSuggest,
+          civility: user?.civility,
+          nameManager: user?.username,
+          emailManager: user?.email,
+          phoneManager: user?.phone,
+          emailFinancial: group?.financialEmail,
+          numberFinancial: group?.financialPhone,
+          denominationUniteLegale: organization?.denominationUniteLegale,
+          siretCompany: organization?.siret,
+        });
+      }
+    },
+    [auth.user.accessToken, auth.user.id]
+  );
 
   useEffect(() => {
-    getSeminar().catch((e) => console.error(e));
-  }, [getSeminar]);
+    getSeminar(router?.query?.id as string).catch((e) => console.error(e));
+  }, [getSeminar, router?.query?.id]);
 
   const handSubmit = async () => {
     setLoading(true);
-    const seminar: any = getSeminarById(
+    const seminar: any = await getSeminarById(
       auth.user.accessToken,
       router?.query?.id
     );
 
     if (seminar) {
       let organizationId: string = "";
-      const organization: any = getOrganizationBySiret(formState.siretCompany);
+      const organization: any = await getOrganizationBySiret(
+        formState.siretCompany
+      );
 
       //Create Organization if not exist
       if (!organization?.id) {
-        const createOrganization: any = postOrganization(
+        const createOrganization: any = await postOrganization(
           formState.siretCompany
         );
+        console.log({ createOrganization });
         organizationId = createOrganization.id;
       }
 
       // verifier si le user est update
       await updateUserById(auth.user.accessToken, seminar?.idUser, {
-        email: formState.emailManager,
         phone: formState.phoneManager,
         idOrganization: organizationId
           ? organizationId
