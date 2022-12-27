@@ -1,13 +1,9 @@
 //Redux && Persist
-import { persistor } from "@redux/store";
 import { createSlice } from "@reduxjs/toolkit";
-import purgeStoredState from "redux-persist/es/purgeStoredState";
+
 import storage from "redux-persist/lib/storage";
 
-//types
-import { AuthSlice } from "types/auth";
-
-export const initialState: AuthSlice = {
+export const initialState: any = {
   login: false,
   user: {
     firstname: "",

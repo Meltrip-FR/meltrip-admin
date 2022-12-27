@@ -14,7 +14,19 @@
       },
       {
         "source": "/admin/dashboard",
-        "destination": "/admin/dshboard.html"
+        "destination": "/admin/dashboard.html"
+      },
+      {
+        "source": "/admin/seminar",
+        "destination": "/admin/seminar.html"
+      },
+      {
+        "source": "/admin/seminar/waitinglist/",
+        "destination": "/admin/seminar/waitinglist/.html"
+      },
+      {
+        "source": "/admin/seminar/waitinglist/*",
+        "destination": "/admin/seminar/waitinglist/[id].html"
       },
       {
         "source": "/500",
