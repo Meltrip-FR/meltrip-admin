@@ -34,4 +34,9 @@ export const CardInfosList = [
       "Confirmations, informations liste de séminaire en attente de réponse",
     url: "/admin/seminar",
   },
+  {
+    title: "Quotes",
+    describe: "Ajouter, Supprimer des devis",
+    url: "/admin/quote",
+  },
 ];

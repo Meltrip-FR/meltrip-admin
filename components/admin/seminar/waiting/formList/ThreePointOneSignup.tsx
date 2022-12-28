@@ -34,7 +34,8 @@ const ThreePointOneSignup = ({
         type: "",
         message: "",
       });
-      handSubmit();
+      setNextPage(4);
+      //handSubmit();
     }
   };
 

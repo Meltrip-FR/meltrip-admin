@@ -15,11 +15,13 @@ import {
 import { getGroupById, updateGroupbyId } from "@lib/groups";
 import { getSeminarById, updateSeminarById } from "@lib/seminar";
 import { getUserById, updateUserById } from "@lib/users";
+import AttributeSeminar from "./formList/attributeQuote";
+import { createQuotesById } from "@lib/quotes";
 
 const FormSeminar = () => {
   const router = useRouter();
   const { auth } = useAppSelector((state) => state);
-  const [nextPage, setNextPage] = useState<number>(1);
+  const [nextPage, setNextPage] = useState<number>(4);
   const [loading, setLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState({
@@ -48,6 +50,7 @@ const FormSeminar = () => {
     numberFinancial: "",
     denominationUniteLegale: "",
     siretCompany: "",
+    listTemplateSelect: [],
   });
 
   const onFormChange = (e: any) => {
@@ -74,7 +77,6 @@ const FormSeminar = () => {
           seminar?.idOrganization
         );
         const group: any = await getGroupById(seminar?.idGroup);
-        console.log(user, organization, group);
         setFormState({
           participNumber: seminar?.adultNumber,
           knowDate: seminar?.knowDate === 0 ? false : true,
@@ -96,6 +98,7 @@ const FormSeminar = () => {
           numberFinancial: group?.financialPhone,
           denominationUniteLegale: organization?.denominationUniteLegale,
           siretCompany: organization?.siret,
+          listTemplateSelect: [],
         });
       }
     },
@@ -124,7 +127,6 @@ const FormSeminar = () => {
         const createOrganization: any = await postOrganization(
           formState.siretCompany
         );
-        console.log({ createOrganization });
         organizationId = createOrganization.id;
       }
 
@@ -141,6 +143,12 @@ const FormSeminar = () => {
         financialEmail: formState.emailFinancial,
         financialPhone: formState.numberFinancial,
       });
+
+      // Attribution de seminaire de devis à un seminaire
+      const quote = await createQuotesById(
+        auth.user.accessToken,
+        formState.listTemplateSelect
+      );
 
       // verifier si un seminar est update
       await updateSeminarById(auth.user.accessToken, seminar?.id, {
@@ -159,6 +167,7 @@ const FormSeminar = () => {
         status: "Accepté",
         step: "devis",
         idUser: seminar?.idUser,
+        idQuote: quote?.id,
         idOrganization: organizationId
           ? organizationId
           : seminar?.idOrganization,
@@ -252,9 +261,17 @@ const FormSeminar = () => {
               setFormState={setFormState}
               setNextPage={setNextPage}
             />
+          ) : nextPage === 3 ? (
+            <ThreePointOneSignup
+              formState={formState}
+              onFormChange={onFormChange}
+              setFormState={setFormState}
+              handSubmit={handSubmit}
+              setNextPage={setNextPage}
+            />
           ) : (
-            nextPage === 3 && (
-              <ThreePointOneSignup
+            nextPage === 4 && (
+              <AttributeSeminar
                 formState={formState}
                 onFormChange={onFormChange}
                 setFormState={setFormState}
