@@ -21,7 +21,7 @@ import { createQuotesById } from "@lib/quotes";
 const FormSeminar = () => {
   const router = useRouter();
   const { auth } = useAppSelector((state) => state);
-  const [nextPage, setNextPage] = useState<number>(4);
+  const [nextPage, setNextPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState({
@@ -77,6 +77,7 @@ const FormSeminar = () => {
           seminar?.idOrganization
         );
         const group: any = await getGroupById(seminar?.idGroup);
+
         setFormState({
           participNumber: seminar?.adultNumber,
           knowDate: seminar?.knowDate === 0 ? false : true,

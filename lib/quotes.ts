@@ -7,11 +7,13 @@ export const createQuotesById = async (token: string, data: any) => {
       propose2: "",
       propose3: "",
       proposeSelect: null,
+      idTemplateQuote: null,
       price: 0,
     };
 
     for (let i = 0; i < data.length; i++) {
       object[`propose${i + 1}`] = data[i].url;
+      object[`idTemplateQuote${i + 1}`] = data[i].id;
     }
 
     return object;
