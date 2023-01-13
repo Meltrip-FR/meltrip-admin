@@ -89,30 +89,27 @@ const QuotePage = () => {
     const imageRef = ref(storage, url);
 
     // Delete the file
-    deleteObject(imageRef)
-      .then(async () => {
-        // File deleted successfully
-        setLoading(false);
-        setProgresspercent(0);
-        const res = await axios.delete(
-          `${process.env.NEXT_PUBLIC_API_URL}/templatequote/${id}`,
-          {
-            headers: {
-              "x-access-token": auth.user.accessToken,
-            },
-          }
-        );
-        if (res.data) {
-          console.log("success");
-          getTemplate().catch((e) => console.error(e));
+    deleteObject(imageRef).then(async () => {
+      // File deleted successfully
+      setLoading(false);
+      setProgresspercent(0);
+      const res = await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/templatequote/${id}`,
+        {
+          headers: {
+            "x-access-token": auth.user.accessToken,
+          },
         }
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-      });
+      );
+      if (res.data) {
+        console.log("success");
+        getTemplate().catch((e) => console.error(e));
+      }
+    });
   };
 
   const getTemplate = useCallback(async () => {
+    console.log(auth);
     let arrayTemplate = [];
     const template = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/templatequotes`,
@@ -137,7 +134,7 @@ const QuotePage = () => {
     getTemplate().catch((e) => console.error(e));
   }, [getTemplate]);
 
-  console.log(listTemplate?.length);
+  console.log(listTemplate);
 
   return (
     <section className="text-gray-600 body-font">
